@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace api{
-    class Character{
+namespace api.Models{
+    public class Character{
         public int Id { get; set; }
         
         [MaxLength(120)]

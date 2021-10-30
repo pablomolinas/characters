@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace api{
-    class Movie{        
+namespace api.Models{
+    public class Movie{        
         public int Id { get; set; }
 
         [Display(Name = "Titulo")]
@@ -33,7 +33,7 @@ namespace api{
     }
 
     // 
-    enum MovieRating {
+    public enum MovieRating {
         one=1,
         two,
         three,
