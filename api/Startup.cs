@@ -31,6 +31,7 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICharactersProvider, SqlServerCharactersProvider>();
+            services.AddScoped<IMoviesProvider, SqlServerMoviesProvider>();
             services.AddControllers();
             services.AddDbContext<CharactersDbContext>(options => {
                 options.UseSqlServer(this.Configuration["CharactersConnectionString"]);

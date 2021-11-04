@@ -6,27 +6,25 @@ using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class charactersController : ControllerBase
+    public class moviesController : ControllerBase
     {
-        private ICharactersProvider charactersProvider;
+        private IMoviesProvider moviesProvider;
 
-        public charactersController(ICharactersProvider charactersProvider)
+        public moviesController(IMoviesProvider moviesProvider)
         {
-            this.charactersProvider = charactersProvider;
+            this.moviesProvider = moviesProvider;
         }
 
-
-        // GET: <CharactersController>
+        // GET: <MoviesController>
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var results = await this.charactersProvider.GetAllAsync();
+            var results = await this.moviesProvider.GetAllAsync();
             if (results != null)
             {
                 return Ok(results);
@@ -35,11 +33,11 @@ namespace api.Controllers
             return NotFound();
         }
 
-        // GET <CharactersController>/5
+        // GET <MoviesController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var result = await this.charactersProvider.GetAsync(id);
+            var result = await this.moviesProvider.GetAsync(id);
 
             if (result != null)
             {
@@ -49,16 +47,16 @@ namespace api.Controllers
             return NotFound(id);
         }
 
-        // POST <CharactersController>
+        // POST <MoviesController>
         [HttpPost]
-        public async Task<IActionResult> AddAsync(Character character)
+        public async Task<IActionResult> AddAsync(Movie movie)
         {
-            if(character == null)
+            if (movie == null)
             {
                 return BadRequest();
             }
 
-            var result = await this.charactersProvider.AddAsync(character);
+            var result = await this.moviesProvider.AddAsync(movie);
             if (result.IsSuccess)
             {
                 return Ok(result.Id);
@@ -67,11 +65,11 @@ namespace api.Controllers
             return NotFound();
         }
 
-        // PUT <CharactersController>/5
+        // PUT <MoviesController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, Character character)
+        public async Task<IActionResult> UpdateAsync(int id, Movie movie)
         {
-            var result = await this.charactersProvider.UpdateAsync(id, character);
+            var result = await this.moviesProvider.UpdateAsync(id, movie);
             if (result)
             {
                 return Ok();
@@ -80,11 +78,11 @@ namespace api.Controllers
             return NotFound();
         }
 
-        // DELETE <CharactersController>/5
+        // DELETE <MoviesController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await this.charactersProvider.DeleteAsync(id);
+            var result = await this.moviesProvider.DeleteAsync(id);
 
             if (result)
             {
