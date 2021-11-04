@@ -24,7 +24,6 @@ namespace api.Models{
 
         // se almacena ruta de la imagen o bien link
         [Display(Name = "Imagen")]
-        [Required(ErrorMessage = "Imagen es un campo requerido.")]
         public string Image { get;set;}
 
         public List<Movie> Movies { get; set; }

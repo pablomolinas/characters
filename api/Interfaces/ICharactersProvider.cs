@@ -15,5 +15,7 @@ namespace api.Interfaces
         Task<bool> UpdateAsync(int id, Character character);
 
         Task<(bool IsSuccess, int? Id)> AddAsync(Character character);
+
+        Task<bool> DeleteAsync(int id);
     }
 }

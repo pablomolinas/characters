@@ -1,3 +1,4 @@
 
-/.vscode/
-/api/bin/
+.vscode/
+api/bin/
+api/obj/

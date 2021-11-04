@@ -50,5 +50,19 @@ namespace api.Provider
 
             return results == 1;
         }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var results = 0;
+            var character = await this.db.Characters.FirstAsync<Character>(x => x.Id == id);
+            
+            if( character != null)
+            {
+                this.db.Characters.Remove(character);
+                results = await this.db.SaveChangesAsync();                
+            }
+
+            return results == 1;
+        }
     }
 }

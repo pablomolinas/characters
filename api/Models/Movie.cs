@@ -8,14 +8,14 @@ namespace api.Models{
         [Display(Name = "Titulo")]
         [Required(ErrorMessage = "Title es requerido.")]
         public string Title { get;set; }
-
-        // Edad
-        [Display(Name = "Edad")]
+       
+        [Display(Name = "Fecha")]
+        [Required(ErrorMessage = "Fecha es requerida.")]
         public System.DateTime Date { get;set; }
         
         // se almacena ruta de la imagen o bien link
         [Display(Name = "Imagen")]
-        [Required(ErrorMessage = "Imagen es un campo requerido.")]
+        //[Required(ErrorMessage = "Imagen es un campo requerido.")]
         public string Image { get;set;}
 
         // calificacion, del 1 al 5
