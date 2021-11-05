@@ -7,37 +7,31 @@ namespace api.Models{
 
         [Display(Name = "Titulo")]
         [Required(ErrorMessage = "Title es requerido.")]
+        [StringLength(100, MinimumLength = 1)]
         public string Title { get;set; }
        
         [Display(Name = "Fecha")]
         [Required(ErrorMessage = "Fecha es requerida.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get;set; }
         
         // se almacena ruta de la imagen o bien link
-        [Display(Name = "Imagen")]
-        //[Required(ErrorMessage = "Imagen es un campo requerido.")]
+        [Display(Name = "Imagen")]        
         public string Image { get;set;}
 
         // calificacion, del 1 al 5
         [Display(Name = "Calificación")]
         [Required(ErrorMessage = "Calificación es un campo requerido.")]
-        public MovieRating Rating { get;set; }
+        [Range(1, 5)]
+        public int Rating { get;set; }
+
+        // Genero asociado
+        [Display(Name = "Genero")]
+        public Genre Genre { get; set; }
 
         //
         [Display(Name = "Personajes asociados")]
         public List<Character> Characters { get; set; }
-
-        // Una pelicula puede pertenecer a varios generos
-        [Display(Name = "Genero/s")]
-        public List<Genre> Genres { get; set; }
-    }
-
-    // 
-    public enum MovieRating {
-        one=1,
-        two,
-        three,
-        four,
-        five
     }
 }

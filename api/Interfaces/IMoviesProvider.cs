@@ -10,7 +10,7 @@ namespace api.Interfaces
     {
         Task<ICollection<Movie>> GetAllAsync();
 
-        Task<ICollection<Movie>> SearchAsync(string search);
+        Task<ICollection<Movie>> SearchTitleAsync(string search);
         Task<Movie> GetAsync(int id);
         Task<bool> UpdateAsync(int id, Movie movie);
 

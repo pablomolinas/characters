@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations;
 namespace api.Models{
     public class Character{
         public int Id { get; set; }
-        
-        [MaxLength(120)]
+                
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Nombre es requerido.")]
+        [StringLength(100, MinimumLength = 1)]
         public string Name { get;set; }
 
         [Required(ErrorMessage = "Edad es requerido.")]
-        [Range(1, 99999)]
+        [Range(1, 99999)] // Rango amplio por ser personajes de ficcion
         public int Age { get;set; }
 
         [Required(ErrorMessage = "Peso es requerido.")]
-        [Range(1, 9999)]
+        [Range(1, 9999)] // Rango amplio por ser personajes de ficcion
         public float Weight { get;set; }
         
         [Display(Name = "Historia")]
@@ -24,7 +24,7 @@ namespace api.Models{
 
         // se almacena ruta de la imagen o bien link
         [Display(Name = "Imagen")]
-        public string Image { get;set;}
+        public string Image { get;set; }
 
         public List<Movie> Movies { get; set; }
     }

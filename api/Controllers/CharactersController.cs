@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
+using api.ModelsViews;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,6 +28,25 @@ namespace api.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var results = await this.charactersProvider.GetAllAsync();
+            if (results != null)
+            {
+                //var view = new List<CharactersListView>();
+
+                //foreach (Character c in results)
+                //{
+                //    view.Add(new CharactersListView(c));
+                //}
+                return Ok(results);
+            }
+
+            return NotFound();
+        }
+
+        // GET: <CharactersController>
+        [HttpGet]
+        public async Task<IActionResult> SearchNameAsync(string name)
+        {
+            var results = await this.charactersProvider.SearchNameAsync(name);
             if (results != null)
             {
                 return Ok(results);

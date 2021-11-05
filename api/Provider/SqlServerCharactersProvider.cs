@@ -35,9 +35,9 @@ namespace api.Provider
             return result;
         }
 
-        public async Task<ICollection<Character>> SearchAsync(string search)
+        public async Task<ICollection<Character>> SearchNameAsync(string name)
         {            
-            var raw = this.db.Characters.FromSqlRaw($"SELECT * FROM Characters WHERE Name LIKE '%{search}%'");
+            var raw = this.db.Characters.FromSqlRaw($"SELECT * FROM Characters WHERE Name LIKE '%{name}%'");
             var results = await raw.ToListAsync();
 
             return results;

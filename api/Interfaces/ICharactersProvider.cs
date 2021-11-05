@@ -10,7 +10,7 @@ namespace api.Interfaces
     {
         Task<ICollection<Character>> GetAllAsync();
 
-        Task<ICollection<Character>> SearchAsync(string search);
+        Task<ICollection<Character>> SearchNameAsync(string name);
         Task<Character> GetAsync(int id);
         Task<bool> UpdateAsync(int id, Character character);
 

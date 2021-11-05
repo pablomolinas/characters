@@ -36,9 +36,9 @@ namespace api.Provider
             return result;
         }
 
-        public async Task<ICollection<Movie>> SearchAsync(string search)
+        public async Task<ICollection<Movie>> SearchTitleAsync(string search)
         {
-            var raw = this.db.Movies.FromSqlRaw($"SELECT * FROM Characters WHERE Name LIKE '%{search}%'");
+            var raw = this.db.Movies.FromSqlRaw($"SELECT * FROM Movies WHERE Title LIKE '%{search}%'");            
             var results = await raw.ToListAsync();
 
             return results;
