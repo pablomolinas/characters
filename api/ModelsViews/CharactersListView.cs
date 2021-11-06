@@ -6,9 +6,9 @@ using api.Models;
 
 namespace api.ModelsViews
 {
-    // Vista de Characters para endpoint, 
-    // 
-    
+    // Vista para objeto Character,
+    // permite serializar solo Name e Image del objeto y asi restringir la informacion que envia un endpoint.
+
     public class CharactersListView
     {
         public string Name { get; set; }

@@ -30,26 +30,13 @@ namespace api.Controllers
             var results = await this.charactersProvider.GetAllAsync();
             if (results != null)
             {
-                //var view = new List<CharactersListView>();
+                var view = new List<CharactersListView>();
 
-                //foreach (Character c in results)
-                //{
-                //    view.Add(new CharactersListView(c));
-                //}
-                return Ok(results);
-            }
-
-            return NotFound();
-        }
-
-        // GET: <CharactersController>
-        [HttpGet]
-        public async Task<IActionResult> SearchNameAsync(string name)
-        {
-            var results = await this.charactersProvider.SearchNameAsync(name);
-            if (results != null)
-            {
-                return Ok(results);
+                foreach (Character c in results)
+                {
+                    view.Add(new CharactersListView(c));
+                }
+                return Ok(view);
             }
 
             return NotFound();
@@ -73,7 +60,7 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync(Character character)
         {
-            if(character == null)
+            if (character == null)
             {
                 return BadRequest();
             }

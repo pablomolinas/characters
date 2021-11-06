@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
+using api.ModelsViews;
 
 
 namespace api.Controllers
@@ -27,7 +28,13 @@ namespace api.Controllers
             var results = await this.moviesProvider.GetAllAsync();
             if (results != null)
             {
-                return Ok(results);
+                var view = new List<MoviesListView>();
+
+                foreach (Movie c in results)
+                {
+                    view.Add(new MoviesListView(c));
+                }
+                return Ok(view);
             }
 
             return NotFound();
