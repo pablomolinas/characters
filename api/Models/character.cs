@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace api.Models{
     public class Character{
-        public int Id { get; set; }
+        [Key]
+        public int CharacterId { get; set; }
                 
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Nombre es requerido.")]
@@ -15,7 +16,7 @@ namespace api.Models{
         public int Age { get;set; }
 
         [Required(ErrorMessage = "Peso es requerido.")]
-        [Range(1, 9999)] // Rango amplio por ser personajes de ficcion
+        [Range(0.01, 9999)] // Rango amplio por ser personajes de ficcion
         public float Weight { get;set; }
         
         [Display(Name = "Historia")]

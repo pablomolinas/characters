@@ -32,7 +32,10 @@ namespace api.Provider
 
         public async Task<Movie> GetAsync(int id)
         {
-            var result = await this.db.Movies.FirstOrDefaultAsync(c => c.Id == id);
+            var result = await this.db.Movies.FirstOrDefaultAsync(c => c.MovieId == id);
+            if (result != null) {
+                result.Genre = await this.db.Genres.FirstOrDefaultAsync(c => c.GenreId == result.GenreId);                
+            }
             return result;
         }
 
@@ -55,7 +58,7 @@ namespace api.Provider
         public async Task<bool> DeleteAsync(int id)
         {
             var results = 0;
-            var movie = await this.db.Movies.FirstAsync<Movie>(x => x.Id == id);
+            var movie = await this.db.Movies.FirstAsync<Movie>(x => x.MovieId == id);
 
             if (movie != null)
             {

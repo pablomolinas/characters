@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace api.Models{
-    public class Movie{        
-        public int Id { get; set; }
+    public class Movie{ 
+        [Key]
+        public int MovieId { get; set; }
 
         [Display(Name = "Titulo")]
         [Required(ErrorMessage = "Title es requerido.")]
@@ -18,7 +19,7 @@ namespace api.Models{
         
         // se almacena ruta de la imagen o bien link
         [Display(Name = "Imagen")]        
-        public string Image { get;set;}
+        public string Image { get;set; }
 
         // calificacion, del 1 al 5
         [Display(Name = "Calificación")]
@@ -27,6 +28,8 @@ namespace api.Models{
         public int Rating { get;set; }
 
         // Genero asociado
+        [Display(Name = "Genero")]
+        public int GenreId { get; set; }
         [Display(Name = "Genero")]
         public Genre Genre { get; set; }
 

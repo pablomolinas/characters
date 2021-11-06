@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace api.Models{
-    public class Genre{        
-        public int Id { get; set; }
+    public class Genre{ 
+        [Key]
+        public int GenreId { get; set; }
 
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "Nombre es un campo requerido.")]

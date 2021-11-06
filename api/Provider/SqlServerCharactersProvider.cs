@@ -31,7 +31,7 @@ namespace api.Provider
 
         public async Task<Character> GetAsync(int id)
         {
-            var result = await this.db.Characters.FirstOrDefaultAsync(c => c.Id == id);
+            var result = await this.db.Characters.FirstOrDefaultAsync(c => c.CharacterId == id);
             return result;
         }
 
@@ -54,7 +54,7 @@ namespace api.Provider
         public async Task<bool> DeleteAsync(int id)
         {
             var results = 0;
-            var character = await this.db.Characters.FirstAsync<Character>(x => x.Id == id);
+            var character = await this.db.Characters.FirstAsync<Character>(x => x.CharacterId == id);
             
             if( character != null)
             {
