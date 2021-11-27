@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using api.Repositories;
 
 namespace api
 {
@@ -30,8 +31,9 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICharactersProvider, SqlServerCharactersProvider>();
-            services.AddScoped<IMoviesProvider, SqlServerMoviesProvider>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(IGenericRepository<>));
+            services.AddScoped<ICharacterRepository, CharactersRepository>();
+            services.AddScoped<IMovieRepository, MoviesRepository>();
             services.AddControllers();
             services.AddDbContext<CharactersDbContext>(options => {
                 options.UseSqlServer(this.Configuration["CharactersConnectionString"]);
