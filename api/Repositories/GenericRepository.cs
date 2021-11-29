@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories
 {
@@ -16,34 +17,39 @@ namespace api.Repositories
         }
         public async Task<TEntity> AddAsync(TEntity entity)
         {
-            await _dbContext.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+            await this._dbContext.Set<TEntity>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();            
             return entity;
         }  
 
-        public Task<TEntity> DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            this._dbContext.Set<TEntity>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public bool EntityExists(int id)
+        public async Task<bool> EntityExists(int id)
         {
-            throw new NotImplementedException();
+            var e = await this._dbContext.Set<TEntity>().FindAsync(id);
+            return e != null;
         }
 
-        public Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await this._dbContext.Set<TEntity>().FindAsync(id);
         }
 
-        public Task<IReadOnlyList<TEntity>> GetListAsync()
+        public async Task<IReadOnlyList<TEntity>> GetListAsync()
         {
-            throw new NotImplementedException();
+            return await this._dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task UpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            this._dbContext.Set<TEntity>().Attach(entity);
+            this._dbContext.Entry(entity).State = EntityState.Modified;            
+            
+            await this._dbContext.SaveChangesAsync();
         }
     }
 }

@@ -10,9 +10,9 @@ namespace api.Interfaces
         public Task<T> GetByIdAsync(int id);
         public Task<IReadOnlyList<T>> GetListAsync();
         public Task<T> AddAsync(T entity);
-        public Task<T> UpdateAsync(T entity);
-        public Task<T> DeleteAsync(T entity);
-        public bool EntityExists(int id);
+        public Task UpdateAsync(T entity);
+        public Task DeleteAsync(T entity);
+        public Task<bool> EntityExists(int id);
     }
 }
 

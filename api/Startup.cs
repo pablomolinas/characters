@@ -31,9 +31,10 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(IGenericRepository<>), typeof(IGenericRepository<>));
+            //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<,>));
             services.AddScoped<ICharacterRepository, CharactersRepository>();
             services.AddScoped<IMovieRepository, MoviesRepository>();
+
             services.AddControllers();
             services.AddDbContext<CharactersDbContext>(options => {
                 options.UseSqlServer(this.Configuration["CharactersConnectionString"]);

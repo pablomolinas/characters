@@ -15,11 +15,11 @@ namespace api.Controllers
     [ApiController]
     public class charactersController : ControllerBase
     {
-        private ICharactersProvider charactersProvider;
+        private ICharacterRepository _charactersRepository;
 
-        public charactersController(ICharactersProvider charactersProvider)
+        public charactersController(ICharacterRepository charactersRepository)
         {
-            this.charactersProvider = charactersProvider;
+            this._charactersRepository = charactersRepository;
         }
 
 
@@ -27,11 +27,12 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var results = await this.charactersProvider.GetAllAsync();
+            var results = await this._charactersRepository.GetListAsync();
             if (results != null)
             {
+                // Convierto a vista, para enviar solo los campos que deseo mostrar
                 var view = new List<CharactersListView>();
-
+                                
                 foreach (Character c in results)
                 {
                     view.Add(new CharactersListView(c));
@@ -46,7 +47,7 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var result = await this.charactersProvider.GetAsync(id);
+            var result = await this._charactersRepository.GetByIdAsync(id);
 
             if (result != null)
             {
@@ -60,45 +61,41 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync(Character character)
         {
-            if (character == null)
+            if (character == null) { return BadRequest("Datos invalidos."); }
+
+            var result = await this._charactersRepository.AddAsync(character);
+            if (result != null)
             {
-                return BadRequest();
+                return Ok(result);
             }
 
-            var result = await this.charactersProvider.AddAsync(character);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Id);
-            }
-
-            return NotFound();
+            return BadRequest("A ocurrido un error, no se ha creado un nuevo Character");
         }
 
         // PUT <CharactersController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, Character character)
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(Character character)
         {
-            var result = await this.charactersProvider.UpdateAsync(id, character);
-            if (result)
-            {
-                return Ok();
-            }
+            if (this._charactersRepository.GetByIdAsync(character.CharacterId) == null) { return BadRequest("El Character enviado no existe."); }
 
-            return NotFound();
+            await this._charactersRepository.UpdateAsync(character);
+            
+            return Ok("Character modificado con éxito.");
+            
         }
 
         // DELETE <CharactersController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await this.charactersProvider.DeleteAsync(id);
-
-            if (result)
+            var e = await this._charactersRepository.GetByIdAsync(id);
+            if(e != null)
             {
-                return Ok(result);
+                await this._charactersRepository.DeleteAsync(e);
+                return Ok("Character eliminado con exito.");
             }
 
-            return NotFound(id);
+            return BadRequest("El Character enviado no existe.");
         }
     }
 }
