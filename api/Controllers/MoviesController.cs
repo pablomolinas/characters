@@ -14,20 +14,21 @@ namespace api.Controllers
     [ApiController]
     public class moviesController : ControllerBase
     {
-        private IMoviesProvider moviesProvider;
+        private IMovieRepository _moviesRepository;
 
-        public moviesController(IMoviesProvider moviesProvider)
+        public moviesController(IMovieRepository moviesRepository)
         {
-            this.moviesProvider = moviesProvider;
+            this._moviesRepository = moviesRepository;
         }
 
         // GET: <MoviesController>
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var results = await this.moviesProvider.GetAllAsync();
+            var results = await this._moviesRepository.GetListAsync();
             if (results != null)
             {
+                // Convierto a vista, para enviar solo los campos que deseo mostrar
                 var view = new List<MoviesListView>();
 
                 foreach (Movie c in results)
@@ -37,66 +38,61 @@ namespace api.Controllers
                 return Ok(view);
             }
 
-            return NotFound();
+            return BadRequest("Sin resultados");
         }
 
         // GET <MoviesController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var result = await this.moviesProvider.GetAsync(id);
+            var result = await this._moviesRepository.GetByIdAsync(id);
 
             if (result != null)
             {
                 return Ok(result);
             }
 
-            return NotFound(id);
+            return BadRequest("El Id enviado no existe.");
         }
 
         // POST <MoviesController>
         [HttpPost]
         public async Task<IActionResult> AddAsync(Movie movie)
         {
-            if (movie == null)
+            if (movie == null){ return BadRequest("Datos invalidos."); }
+
+            var result = await this._moviesRepository.AddAsync(movie);
+            if (result != null)
             {
-                return BadRequest();
+                return Ok(result);
             }
 
-            var result = await this.moviesProvider.AddAsync(movie);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Id);
-            }
-
-            return NotFound();
+            return BadRequest("A ocurrido un error, no se ha creado la Pelicula");
         }
 
         // PUT <MoviesController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, Movie movie)
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync(Movie movie)
         {
-            var result = await this.moviesProvider.UpdateAsync(id, movie);
-            if (result)
-            {
-                return Ok();
-            }
-
-            return NotFound();
+            if (this._moviesRepository.GetByIdAsync(movie.MovieId) == null) { return BadRequest("La Pelicula o Serie enviada no existe."); }
+            
+            await this._moviesRepository.UpdateAsync(movie);
+            
+            return Ok("Pelicula modificada con éxito.");
         }
 
         // DELETE <MoviesController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var result = await this.moviesProvider.DeleteAsync(id);
-
-            if (result)
+            var e = await this._moviesRepository.GetByIdAsync(id);
+            if (e != null)
             {
-                return Ok(result);
+                await this._moviesRepository.DeleteAsync(e);
+                return Ok("Pelicula eliminada con exito.");
             }
 
-            return NotFound(id);
+            return BadRequest("El pelicula enviada no existe.");
         }
     }
 }

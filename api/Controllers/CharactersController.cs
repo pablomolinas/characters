@@ -40,7 +40,7 @@ namespace api.Controllers
                 return Ok(view);
             }
 
-            return NotFound();
+            return BadRequest("Sin resultados");
         }
 
         // GET <CharactersController>/5
@@ -54,7 +54,7 @@ namespace api.Controllers
                 return Ok(result);
             }
 
-            return NotFound(id);
+            return BadRequest("El Id enviado no existe.");
         }
 
         // POST <CharactersController>
@@ -69,18 +69,18 @@ namespace api.Controllers
                 return Ok(result);
             }
 
-            return BadRequest("A ocurrido un error, no se ha creado un nuevo Character");
+            return BadRequest("A ocurrido un error, no se ha creado un nuevo personaje");
         }
 
         // PUT <CharactersController>/5
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(Character character)
         {
-            if (this._charactersRepository.GetByIdAsync(character.CharacterId) == null) { return BadRequest("El Character enviado no existe."); }
+            if (this._charactersRepository.GetByIdAsync(character.CharacterId) == null) { return BadRequest("El personaje enviado no existe."); }
 
             await this._charactersRepository.UpdateAsync(character);
             
-            return Ok("Character modificado con éxito.");
+            return Ok("Personaje modificado con éxito.");
             
         }
 
@@ -92,10 +92,10 @@ namespace api.Controllers
             if(e != null)
             {
                 await this._charactersRepository.DeleteAsync(e);
-                return Ok("Character eliminado con exito.");
+                return Ok("Personaje eliminado con exito.");
             }
 
-            return BadRequest("El Character enviado no existe.");
+            return BadRequest("El personaje enviado no existe.");
         }
     }
 }

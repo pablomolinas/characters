@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
-using api.Provider;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
