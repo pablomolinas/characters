@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
 using api.ModelsViews;
+using api.Response;
+using api.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,87 +17,76 @@ namespace api.Controllers
     [ApiController]
     public class charactersController : ControllerBase
     {
-        private ICharacterRepository _charactersRepository;
+        private ICharacterService _charactersService;
 
-        public charactersController(ICharacterRepository charactersRepository)
+        public charactersController(ICharacterService charactersService)
         {
-            this._charactersRepository = charactersRepository;
+            this._charactersService = charactersService;
         }
-
 
         // GET: <CharactersController>
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetCharacterList()
         {
-            var results = await this._charactersRepository.GetListAsync();
-            if (results != null)
-            {
-                // Convierto a vista, para enviar solo los campos que deseo mostrar
-                var view = new List<CharactersListView>();
-                                
-                foreach (Character c in results)
-                {
-                    view.Add(new CharactersListView(c));
-                }
-                return Ok(view);
+            var result = await this._charactersService.GetCharacterList();
+            if (result.Success)
+            {                
+                return Ok(result);
             }
 
-            return BadRequest("Sin resultados");
+            return BadRequest(result);
         }
 
         // GET <CharactersController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<IActionResult> GetCharacterById(int id)
         {
-            var result = await this._charactersRepository.GetByIdAsync(id);
-
-            if (result != null)
+            var result = await this._charactersService.GetCharacterById(id);
+            if (result.Success)
             {
                 return Ok(result);
             }
 
-            return BadRequest("El Id enviado no existe.");
+            return BadRequest(result);
         }
 
         // POST <CharactersController>
         [HttpPost]
-        public async Task<IActionResult> AddAsync(Character character)
+        public async Task<IActionResult> AddCharacter(Character character)
         {
-            if (character == null) { return BadRequest("Datos invalidos."); }
-
-            var result = await this._charactersRepository.AddAsync(character);
-            if (result != null)
+            var result = await this._charactersService.AddCharacter(character);
+            if (result.Success)
             {
                 return Ok(result);
             }
 
-            return BadRequest("A ocurrido un error, no se ha creado un nuevo personaje");
+            return BadRequest(result);
         }
 
         // PUT <CharactersController>/5
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(Character character)
+        public async Task<IActionResult> UpdateCharacter(Character character)
         {
-            if (this._charactersRepository.GetByIdAsync(character.CharacterId) == null) { return BadRequest("El personaje enviado no existe."); }
+            var result = await this._charactersService.UpdateCharacter(character);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
 
-            await this._charactersRepository.UpdateAsync(character);
-            
-            return Ok("Personaje modificado con éxito.");
-            
+            return BadRequest(result);            
         }
 
         // DELETE <CharactersController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteCharacter(int id)
         {
-            var e = await this._charactersRepository.GetByIdAsync(id);
-            if(e != null)
+            var result = await this._charactersService.DeleteCharacter(id);
+            if(result.Success) 
             {
-                await this._charactersRepository.DeleteAsync(e);
-                return Ok("Personaje eliminado con exito.");
+                return Ok(result);
             }
 
-            return BadRequest("El personaje enviado no existe.");
+            return BadRequest(result);
         }
     }
 }

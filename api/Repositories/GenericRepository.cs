@@ -15,17 +15,18 @@ namespace api.Repositories
         {
             this._dbContext = dbContext;
         }
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public async Task<bool> AddAsync(TEntity entity)
         {
             await this._dbContext.Set<TEntity>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();            
-            return entity;
+            var affected = await _dbContext.SaveChangesAsync();            
+            return affected != 0;
         }  
 
-        public async Task DeleteAsync(TEntity entity)
+        public async Task<bool> DeleteAsync(TEntity entity)
         {
             this._dbContext.Set<TEntity>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
+            var affected = await _dbContext.SaveChangesAsync();
+            return affected != 0;
         }
 
         public async Task<bool> EntityExists(int id)
@@ -44,12 +45,13 @@ namespace api.Repositories
             return await this._dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public async Task<bool> UpdateAsync(TEntity entity)
         {
             this._dbContext.Set<TEntity>().Attach(entity);
             this._dbContext.Entry(entity).State = EntityState.Modified;            
             
-            await this._dbContext.SaveChangesAsync();
+            var affected = await this._dbContext.SaveChangesAsync();
+            return affected != 0;
         }
     }
 }
