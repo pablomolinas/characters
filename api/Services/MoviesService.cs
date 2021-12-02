@@ -6,6 +6,7 @@ using api.Interfaces;
 using api.Models;
 using api.Repositories;
 using api.Response;
+using api.ModelsViews;
 
 namespace api.Services
 {
@@ -18,34 +19,87 @@ namespace api.Services
             this._movieRepository = movieRepository;
         }
 
-        public Task<Result> AddMovie(Movie character)
+        public async Task<Result> AddMovie(Movie movie)
         {
-            throw new NotImplementedException();
+            if (movie == null) { return Result.FailureResult("Datos invalidos."); }
+
+            var result = await this._movieRepository.AddAsync(movie);
+            if (result)
+            {
+                return Result<string>.SuccessResult("Pelicula agregada exitosamente.");
+            }
+
+            return Result.FailureResult("No fue posible agregar pelicula.");
         }
 
-        public Task<Result> DeleteMovie(Movie character)
+        public async Task<Result> DeleteMovie(int id)
         {
-            throw new NotImplementedException();
+            var movie = await this._movieRepository.GetByIdAsync(id);
+            if (movie != null)
+            {
+                var r = await this._movieRepository.DeleteAsync(movie);
+                if (r)
+                {
+                    return Result<string>.SuccessResult("Pelicula eliminada exitosamente.");
+                }
+
+                return Result.FailureResult("No fue posible eliminar Pelicula.");
+            }
+
+            return Result.FailureResult("Id de Pelicula invalida.");
         }
 
-        public Task<Result> ExistMovie(int id)
+        public async Task<Result> ExistMovie(int id)
         {
-            throw new NotImplementedException();
+            var movie = await this._movieRepository.GetByIdAsync(id);
+            if (movie != null)
+            {
+                return Result.SuccessResult();
+            }
+
+            return Result.FailureResult("Pelicula o serie inexistente.");
         }
 
-        public Task<Result> GetMovieById(int id)
+        public async Task<Result> GetMovieById(int id)
         {
-            throw new NotImplementedException();
+            var movie = await this._movieRepository.GetByIdAsync(id);
+            if (movie != null)
+            {
+                return Result<Movie>.SuccessResult(movie);
+            }
+
+            return Result.FailureResult("Pelicula o Serie inexistente.");
         }
 
-        public Task<Result> GetMovieList()
+        public async Task<Result> GetMovieList()
         {
-            throw new NotImplementedException();
+            var results = await this._movieRepository.GetListAsync();
+            if (results != null)
+            {
+                // Convierto a vista, para enviar solo los campos que deseo mostrar
+                var view = new List<MoviesListView>();
+
+                foreach (Movie c in results)
+                {
+                    view.Add(new MoviesListView(c));
+                }
+                return Result<List<MoviesListView>>.SuccessResult(view);
+            }
+
+            return Result.FailureResult("Sin resultados");
         }
 
-        public Task<Result> UpdateMovie(Movie character)
+        public async Task<Result> UpdateMovie(Movie movie)
         {
-            throw new NotImplementedException();
+            if (this._movieRepository.GetByIdAsync(movie.MovieId) == null) { return Result.FailureResult("La Pelicula o Serie enviada no existe."); }
+
+            var r = await this._movieRepository.UpdateAsync(movie);
+            if (r) 
+            {
+                return Result<string>.SuccessResult("Pelicula actualizada exitosamente.");
+            }
+
+            return Result.FailureResult("Pelicula no actualizada.");
         }
     }
 }

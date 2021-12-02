@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
-using api.ModelsViews;
 
 
 namespace api.Controllers
@@ -14,85 +13,76 @@ namespace api.Controllers
     [ApiController]
     public class moviesController : ControllerBase
     {
-        private IMovieRepository _moviesRepository;
+        private IMovieService _movieService;
 
-        public moviesController(IMovieRepository moviesRepository)
+        public moviesController(IMovieService movieService)
         {
-            this._moviesRepository = moviesRepository;
+            this._movieService = movieService;
         }
 
         // GET: <MoviesController>
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetMovieList()
         {
-            var results = await this._moviesRepository.GetListAsync();
-            if (results != null)
-            {
-                // Convierto a vista, para enviar solo los campos que deseo mostrar
-                var view = new List<MoviesListView>();
-
-                foreach (Movie c in results)
-                {
-                    view.Add(new MoviesListView(c));
-                }
-                return Ok(view);
+            var results = await this._movieService.GetMovieList();
+            if (results.Success)
+            {                
+                return Ok(results);
             }
 
-            return BadRequest("Sin resultados");
+            return BadRequest(results);
         }
 
         // GET <MoviesController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<IActionResult> GetMovieById(int id)
         {
-            var result = await this._moviesRepository.GetByIdAsync(id);
-
-            if (result != null)
+            var result = await this._movieService.GetMovieById(id);
+            if (result.Success)
             {
                 return Ok(result);
             }
 
-            return BadRequest("El Id enviado no existe.");
+            return BadRequest(result);
         }
 
         // POST <MoviesController>
         [HttpPost]
-        public async Task<IActionResult> AddAsync(Movie movie)
-        {
-            if (movie == null){ return BadRequest("Datos invalidos."); }
-
-            var result = await this._moviesRepository.AddAsync(movie);
-            if (result != null)
+        public async Task<IActionResult> AddMovie(Movie movie)
+        {            
+            var result = await this._movieService.AddMovie(movie);
+            if (result.Success)
             {
                 return Ok(result);
             }
 
-            return BadRequest("A ocurrido un error, no se ha creado la Pelicula");
+            return BadRequest(result);
         }
 
         // PUT <MoviesController>/5
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(Movie movie)
+        public async Task<IActionResult> UpdateMovie(Movie movie)
         {
-            if (this._moviesRepository.GetByIdAsync(movie.MovieId) == null) { return BadRequest("La Pelicula o Serie enviada no existe."); }
+            var result = await this._movieService.UpdateMovie(movie);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
             
-            await this._moviesRepository.UpdateAsync(movie);
-            
-            return Ok("Pelicula modificada con éxito.");
+            return BadRequest(result);
         }
 
         // DELETE <MoviesController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteMovie(int id)
         {
-            var e = await this._moviesRepository.GetByIdAsync(id);
-            if (e != null)
-            {
-                await this._moviesRepository.DeleteAsync(e);
-                return Ok("Pelicula eliminada con exito.");
+            var result = await this._movieService.DeleteMovie(id);
+            if (result.Success)
+            {                
+                return Ok(result);
             }
 
-            return BadRequest("El pelicula enviada no existe.");
+            return BadRequest(result);
         }
     }
 }

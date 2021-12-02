@@ -14,7 +14,7 @@ namespace api.Interfaces
         public Task<Result> GetMovieList();
         public Task<Result> AddMovie(Movie character);
         public Task<Result> UpdateMovie(Movie character);
-        public Task<Result> DeleteMovie(Movie character);
+        public Task<Result> DeleteMovie(int id);
         public Task<Result> ExistMovie(int id);
     }
 }
