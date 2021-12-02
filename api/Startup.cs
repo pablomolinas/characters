@@ -33,6 +33,7 @@ namespace api
             //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<,>));
             services.AddScoped<ICharacterRepository, CharactersRepository>();
             services.AddScoped<IMovieRepository, MoviesRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
 
             services.AddControllers();
             services.AddDbContext<CharactersDbContext>(options => {

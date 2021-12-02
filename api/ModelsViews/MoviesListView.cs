@@ -12,8 +12,9 @@ namespace api.ModelsViews
         // Vista para objeto Movies,
         // permite serializar solo Name e Image del objeto y asi restringir la informacion que envia un endpoint.
 
-        public string Image { get; set; }
         public string Title { get; set; }
+        public string Image { get; set; }
+        
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
 

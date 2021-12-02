@@ -6,8 +6,8 @@ using api.Models;
 
 namespace api.Interfaces
 {
-    public interface ICharacterRepository : IGenericRepository<Character>
+    public interface IGenreRepository : IGenericRepository<Genre>
     {
-        // Metodos particulares de Character
+
     }
 }
