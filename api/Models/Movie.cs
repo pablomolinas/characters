@@ -35,6 +35,6 @@ namespace api.Models{
 
         //
         [Display(Name = "Personajes asociados")]
-        public List<CharacterMovie> CharacterMovies { get; set; }
+        public ICollection<CharacterMovie> CharacterMovies { get; set; }
     }
 }

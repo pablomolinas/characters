@@ -15,12 +15,14 @@ namespace api.Services
         private readonly IMovieRepository _movieRepository;
         private readonly IGenreRepository _genreRepository;
         private readonly ICharacterRepository _characterRepository;
+        private readonly ICharacterMovieRepository _characterMovieRepository;
 
-        public MoviesService(IMovieRepository movieRepository, IGenreRepository genreRepository, ICharacterRepository characterRepository)
+        public MoviesService(IMovieRepository movieRepository, IGenreRepository genreRepository, ICharacterRepository characterRepository, ICharacterMovieRepository characterMovieRepository)
         {
             this._movieRepository = movieRepository;
             this._genreRepository = genreRepository;
             this._characterRepository = characterRepository;
+            this._characterMovieRepository = characterMovieRepository;
         }
 
         public async Task<Result> AddMovie(Movie movie)
@@ -92,12 +94,14 @@ namespace api.Services
                 if (movie != null)
                 {
                     //cargar genero asociado
-                    movie.Genre = await this._genreRepository.GetByIdAsync(movie.GenreId);                    
+                    movie.Genre = await this._genreRepository.GetByIdAsync(movie.GenreId);
                     //if (genre != null)
                     //{
                     //    movie.Genre = genre;
-                    //}
-                    //movie.Characters = await this._characterRepository.Get
+                    //}                    
+
+                    //carga de personajes asociados
+                    movie.CharacterMovies = await this._characterMovieRepository.GetCharactersByMovieId(movie.MovieId);
 
                     return Result<Movie>.SuccessResult(movie);
                 }

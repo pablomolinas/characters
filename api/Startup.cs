@@ -16,7 +16,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using api.Repositories;
 using api.Services;
-using System.Text.Json.Serialization;
 
 namespace api
 {
@@ -37,13 +36,15 @@ namespace api
             services.AddScoped<ICharacterRepository, CharactersRepository>();
             services.AddScoped<IMovieRepository, MoviesRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<ICharacterMovieRepository, CharacterMovieRepository>();
 
             // Inicializacion de servicios
             services.AddScoped<ICharacterService, CharactersService>();
             services.AddScoped<IMovieService, MoviesService>();
-
-            services.AddControllers().AddJsonOptions(x =>
-                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
             services.AddDbContext<CharactersDbContext>(options => {
                 options.UseSqlServer(this.Configuration["CharactersConnectionString"]);

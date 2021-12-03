@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using api.Models;
+
+namespace api.Interfaces
+{
+    public interface ICharacterMovieRepository : IGenericRepository<CharacterMovie>
+    {
+        //
+        public Task<ICollection<CharacterMovie>> GetMoviesByCharacterId(int CharacterId);
+        public Task<ICollection<CharacterMovie>> GetCharactersByMovieId(int MovieId);
+    }
+}

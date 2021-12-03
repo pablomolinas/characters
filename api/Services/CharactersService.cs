@@ -14,12 +14,12 @@ namespace api.Services
     public class CharactersService : ICharacterService
     {
         private readonly ICharacterRepository _charactersRepository;
-        private readonly IMovieRepository _movieRepository;
+        private readonly ICharacterMovieRepository _characterMovieRepository;
 
-        public CharactersService(ICharacterRepository charactersRepository, IMovieRepository movieRepository)
+        public CharactersService(ICharacterRepository charactersRepository, ICharacterMovieRepository characterMovieRepository)
         {
             this._charactersRepository = charactersRepository;
-            this._movieRepository = movieRepository;
+            this._characterMovieRepository = characterMovieRepository;
         }
         
         public async Task<Result> GetCharacterById(int id)
@@ -29,9 +29,9 @@ namespace api.Services
                 var character = await this._charactersRepository.GetByIdAsync(id);
                 if (character != null)
                 {
-                    //var movies = await this._movieRepository.GetListAsync(character.CharacterId);
-                    //character.Movies = movies;
-
+                    // carga de peliculas o series asociadas
+                    character.CharacterMovies = await this._characterMovieRepository.GetMoviesByCharacterId(character.CharacterId);
+                    
                     return Result<Character>.SuccessResult(character);
                 }
             }catch(Exception e)
