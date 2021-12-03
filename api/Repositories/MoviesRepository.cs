@@ -16,6 +16,11 @@ namespace api.Repositories
             _dbContext = dbContext;
         }
 
+        /*public async Task<ICollection<Movie>> GetMoviesByCharacterId()
+        {
+            return [];
+        }*/
+
         /*public async Task<ICollection<Movie>> SearchTitleAsync(string search)
         {
             var raw = this.db.Movies.FromSqlRaw($"SELECT * FROM Movies WHERE Title LIKE '%{search}%'");
