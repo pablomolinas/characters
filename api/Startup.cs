@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using api.Repositories;
 using api.Services;
+using System.Text.Json.Serialization;
 
 namespace api
 {
@@ -41,7 +42,9 @@ namespace api
             services.AddScoped<ICharacterService, CharactersService>();
             services.AddScoped<IMovieService, MoviesService>();
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x =>
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
             services.AddDbContext<CharactersDbContext>(options => {
                 options.UseSqlServer(this.Configuration["CharactersConnectionString"]);
             });

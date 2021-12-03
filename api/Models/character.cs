@@ -27,6 +27,6 @@ namespace api.Models{
         [Display(Name = "Imagen")]
         public string Image { get;set; }
 
-        public List<Movie> Movies { get; set; }
+        public List<CharacterMovie> CharacterMovies { get; set; }
     }
 }
