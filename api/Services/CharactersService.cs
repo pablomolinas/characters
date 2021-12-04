@@ -42,16 +42,27 @@ namespace api.Services
             return Result.FailureResult("Personaje inexistente.");
         }
 
-        public async Task<Result> GetCharacterList()
+        public async Task<Result> GetCharacterList(string? name, int? age, int? movie)
         {
             try { 
                 var results = await this._charactersRepository.GetListAsync();
                 if (results != null)
                 {
+                    // carga de peliculas o series asociadas
+                    foreach (Character c in results)
+                    {                        
+                        c.CharacterMovies = await this._characterMovieRepository.GetMoviesByCharacterId(c.CharacterId);
+                    }
+                    
+                    // filtros
+                    var r = this._charactersRepository.FilterCharacterByName(results, name);
+                    r = this._charactersRepository.FilterCharacterByAge(r, age);
+                    r = this._charactersRepository.FilterCharacterByMovieId(r, movie);
+
                     // Convierto a vista, para enviar solo los campos que deseo mostrar
                     var view = new List<CharactersListView>();
 
-                    foreach (Character c in results)
+                    foreach (Character c in r)
                     {
                         view.Add(new CharactersListView(c));
                     }

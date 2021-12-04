@@ -26,9 +26,9 @@ namespace api.Controllers
 
         // GET: <CharactersController>
         [HttpGet]
-        public async Task<IActionResult> GetCharacterList()
+        public async Task<IActionResult> GetCharacterList(string? name, int? age, int? movie)
         {
-            var result = await this._charactersService.GetCharacterList();
+            var result = await this._charactersService.GetCharacterList(name, age, movie);
             if (result.Success)
             {                
                 return Ok(result);

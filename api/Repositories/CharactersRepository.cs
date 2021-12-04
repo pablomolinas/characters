@@ -16,13 +16,35 @@ namespace api.Repositories
             _dbContext = dbContext;
         }
         
-
-        /*public async Task<ICollection<Character>> SearchNameAsync(string name)
+        // Filtro por personajes por name
+        public IEnumerable<Character> FilterCharacterByName(IEnumerable<Character> characters, string? name)
         {
-            var raw = _dbSet.FromSqlRaw($"SELECT * FROM Characters WHERE Name LIKE '%{name}%'");
-            var results = await raw.ToListAsync();
+            if(name == null || name == "" ) { return characters; }
 
-            return results;
-        }*/
+            var result = characters.Where(c => c.Name.Contains(name));
+
+            return result;
+        }
+
+        // Filtro por personajes por edad
+        public IEnumerable<Character> FilterCharacterByAge(IEnumerable<Character> characters, int? age)
+        {
+            if (age == null || age <= 0) { return characters; }
+
+            var result = characters.Where(c => c.Age == age);
+
+            return result;
+        }
+
+        // Filtro por personajes por pelicula o serie
+        public IEnumerable<Character> FilterCharacterByMovieId(IEnumerable<Character> characters, int? MovieId)
+        {
+            if (MovieId == null || MovieId <= 0) { return characters; }
+
+            var result = characters.Where(c => c.CharacterMovies
+                                            .Any(m => m.MovieId == MovieId));
+
+            return result;
+        }
     }
 }

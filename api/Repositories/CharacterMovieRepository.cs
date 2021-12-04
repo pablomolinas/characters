@@ -19,6 +19,7 @@ namespace api.Repositories
             this._characterRepository = characterRepository;
         }
 
+        // Entrega listado de peliculas asociadas a un personaje
         public async Task<ICollection<CharacterMovie>> GetMoviesByCharacterId(int CharacterId)
         {
             var movies = new List<CharacterMovie>();
@@ -38,6 +39,7 @@ namespace api.Repositories
             return movies;
         }
 
+        // Entrega listado de personajes asociados a una pelicula
         public async Task<ICollection<CharacterMovie>> GetCharactersByMovieId(int MovieId)
         {
             var characters = new List<CharacterMovie>();

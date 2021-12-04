@@ -11,7 +11,7 @@ namespace api.Interfaces
     {
         public Task<Result> GetCharacterById(int id);
 
-        public Task<Result> GetCharacterList();
+        public Task<Result> GetCharacterList(string? name, int? age, int? movie);
         public Task<Result> AddCharacter(Character character);
         public Task<Result> UpdateCharacter(Character character);
         public Task<Result> DeleteCharacter(int id);
