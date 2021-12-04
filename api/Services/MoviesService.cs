@@ -94,11 +94,7 @@ namespace api.Services
                 if (movie != null)
                 {
                     //cargar genero asociado
-                    movie.Genre = await this._genreRepository.GetByIdAsync(movie.GenreId);
-                    //if (genre != null)
-                    //{
-                    //    movie.Genre = genre;
-                    //}                    
+                    movie.Genre = await this._genreRepository.GetByIdAsync(movie.GenreId);                                      
 
                     //carga de personajes asociados
                     movie.CharacterMovies = await this._characterMovieRepository.GetCharactersByMovieId(movie.MovieId);
@@ -114,17 +110,22 @@ namespace api.Services
             return Result.FailureResult("Pelicula o Serie inexistente.");
         }
 
-        public async Task<Result> GetMovieList()
+        public async Task<Result> GetMovieList(string? name, int? genreId, string? order)
         {
             try
             {
                 var results = await this._movieRepository.GetListAsync();
                 if (results != null)
                 {
+                    // filtros
+                    var r = this._movieRepository.FilterMovieByName(results, name);
+                    r = this._movieRepository.FilterMovieByGenreId(r, genreId);
+                    r = this._movieRepository.FilterMovieOrder(r, order);
+
                     // Convierto a vista, para enviar solo los campos que deseo mostrar
                     var view = new List<MoviesListView>();
 
-                    foreach (Movie c in results)
+                    foreach (Movie c in r)
                     {
                         view.Add(new MoviesListView(c));
                     }

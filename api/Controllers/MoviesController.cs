@@ -22,9 +22,9 @@ namespace api.Controllers
 
         // GET: <MoviesController>
         [HttpGet]
-        public async Task<IActionResult> GetMovieList()
+        public async Task<IActionResult> GetMovieList(string? name, int? genreId, string? order)
         {
-            var results = await this._movieService.GetMovieList();
+            var results = await this._movieService.GetMovieList(name, genreId, order);
             if (results.Success)
             {                
                 return Ok(results);

@@ -11,7 +11,7 @@ namespace api.Interfaces
     {
         public Task<Result> GetMovieById(int id);
 
-        public Task<Result> GetMovieList();
+        public Task<Result> GetMovieList(string? name, int? genre, string? order);
         public Task<Result> AddMovie(Movie character);
         public Task<Result> UpdateMovie(Movie character);
         public Task<Result> DeleteMovie(int id);

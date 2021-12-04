@@ -16,17 +16,17 @@ namespace api.Repositories
             _dbContext = dbContext;
         }
         
-        // Filtro por personajes por name
+        // Filtro personajes por name
         public IEnumerable<Character> FilterCharacterByName(IEnumerable<Character> characters, string? name)
         {
             if(name == null || name == "" ) { return characters; }
 
-            var result = characters.Where(c => c.Name.Contains(name));
+            var result = characters.Where(c => c.Name.ToLower().Contains(name.ToLower()));
 
             return result;
         }
 
-        // Filtro por personajes por edad
+        // Filtro personajes por edad
         public IEnumerable<Character> FilterCharacterByAge(IEnumerable<Character> characters, int? age)
         {
             if (age == null || age <= 0) { return characters; }
@@ -36,7 +36,7 @@ namespace api.Repositories
             return result;
         }
 
-        // Filtro por personajes por pelicula o serie
+        // Filtro personajes por pelicula o serie
         public IEnumerable<Character> FilterCharacterByMovieId(IEnumerable<Character> characters, int? MovieId)
         {
             if (MovieId == null || MovieId <= 0) { return characters; }
