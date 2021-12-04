@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using api.Models;
 
-namespace api.Models
+namespace api.Context
 {
     // Referencia a DB
     public class CharactersDbContext : DbContext

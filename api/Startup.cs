@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using api.Repositories;
 using api.Services;
+using api.Context;
 
 namespace api
 {
@@ -46,9 +47,19 @@ namespace api
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
+            services.AddEntityFrameworkSqlServer();
+
+            // Context para CharactersDb
             services.AddDbContext<CharactersDbContext>(options => {
                 options.UseSqlServer(this.Configuration["CharactersConnectionString"]);
             });
+
+            // Context para UsersDb
+            services.AddDbContext<UserContext>((services, options) => {
+                options.UseInternalServiceProvider(services);
+                options.UseSqlServer(this.Configuration["UsersConnectionString"]);
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
