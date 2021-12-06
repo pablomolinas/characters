@@ -50,7 +50,7 @@ namespace api
                         Description = "Ingrese Bearer [Token] para autentificarse en la aplicacion"
                     });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement 
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
@@ -99,10 +99,12 @@ namespace api
             services.AddScoped<IMovieRepository, MoviesRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<ICharacterMovieRepository, CharacterMovieRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // Inicializacion de servicios
             services.AddScoped<ICharacterService, CharactersService>();
             services.AddScoped<IMovieService, MoviesService>();
+            services.AddTransient<IUserService, UserService>();
             
             services.AddControllers().AddNewtonsoftJson(options => {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

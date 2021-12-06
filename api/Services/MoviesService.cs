@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
 using api.Repositories;
-using api.Response;
+using api.ModelsViews.Response;
 using api.ModelsViews;
 
 namespace api.Services

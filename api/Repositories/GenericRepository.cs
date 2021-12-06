@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
-using api.Context;
-using Microsoft.EntityFrameworkCore;
+using api.Context; 
+using Microsoft.EntityFrameworkCore;  
 
 namespace api.Repositories
 {
-    public abstract class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity> where TEntity : class where TContext : CharactersDbContext
+    public abstract class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity> where TEntity : class where TContext : DbContext
     {
         private readonly TContext _dbContext;
         public GenericRepository(TContext dbContext)

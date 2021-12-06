@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
 using api.ModelsViews;
-using api.Response;
+using api.ModelsViews.Response;
 using api.Services;
 using Microsoft.AspNetCore.Authorization;
 
