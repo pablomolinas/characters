@@ -8,6 +8,7 @@ using api.Interfaces;
 using api.ModelsViews;
 using api.Response;
 using api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,6 +16,7 @@ namespace api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class charactersController : ControllerBase
     {
         private ICharacterService _charactersService;

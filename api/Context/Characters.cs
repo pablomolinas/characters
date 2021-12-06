@@ -7,7 +7,7 @@ namespace api.Context
     public class CharactersDbContext : DbContext
     {
         // contexto de conexion por inyeccion de dependencias
-        public CharactersDbContext(DbContextOptions options) : base(options) {
+        public CharactersDbContext(DbContextOptions<CharactersDbContext> options) : base(options) {
             Database.EnsureCreated();
         }        
         

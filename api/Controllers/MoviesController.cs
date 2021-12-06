@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class moviesController : ControllerBase
     {
         private IMovieService _movieService;
