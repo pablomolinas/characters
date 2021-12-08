@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.ModelsViews.Response;
+using api.ViewModels.Response;
 using api.Models;
 
 namespace api.Interfaces

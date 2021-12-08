@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
-using api.ModelsViews;
-using api.ModelsViews.Response;
+using api.ViewModels;
+using api.ViewModels.Response;
 using api.Services;
 using Microsoft.AspNetCore.Authorization;
 

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
 using api.Repositories;
-using api.ModelsViews.Response;
-using api.ModelsViews;
+using api.ViewModels.Response;
+using api.ViewModels;
 
 namespace api.Services
 {

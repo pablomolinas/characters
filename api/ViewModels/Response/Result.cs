@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.ModelsViews.Response
+namespace api.ViewModels.Response
 {
     // Patron result
     // Proporciona un objeto que estandariza y contiene respuestas success, fail y exception.

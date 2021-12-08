@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Models;
 
-namespace api.ModelsViews
+namespace api.ViewModels
 {
     // Vista para objeto Character,
     // permite serializar solo Name e Image del objeto y asi restringir la informacion que envia un endpoint.

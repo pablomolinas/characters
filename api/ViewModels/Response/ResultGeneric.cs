@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.ModelsViews.Response
+namespace api.ViewModels.Response
 {
     // Hereda de Result, siendo generico me permite incluir cualquier tipo de dato en SuccessResult
     public class Result<T> : Result

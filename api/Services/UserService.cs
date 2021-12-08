@@ -6,9 +6,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
-using api.ModelsViews.Auth.Login;
-using api.ModelsViews.Auth.Register;
-using api.ModelsViews.Response;
+using api.ViewModels.Auth.Login;
+using api.ViewModels.Auth.Register;
+using api.ViewModels.Response;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 

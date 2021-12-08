@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using api.ModelsViews.Auth.Register;
-using api.ModelsViews.Auth.Login;
+using api.ViewModels.Auth.Register;
+using api.ViewModels.Auth.Login;
 using api.Interfaces;
 
 namespace api.Controllers

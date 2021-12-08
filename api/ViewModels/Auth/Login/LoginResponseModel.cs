@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.ModelsViews.Auth.Login
+namespace api.ViewModels.Auth.Login
 {
     public class LoginResponseModel
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.ModelsViews.Response;
-using api.ModelsViews.Auth.Register;
-using api.ModelsViews.Auth.Login;
+using api.ViewModels.Response;
+using api.ViewModels.Auth.Register;
+using api.ViewModels.Auth.Login;
 using api.Models;
 
 namespace api.Interfaces

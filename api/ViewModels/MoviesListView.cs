@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using api.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace api.ModelsViews
+namespace api.ViewModels
 {
     public class MoviesListView
     {
