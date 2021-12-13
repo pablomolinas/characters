@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.ViewModels.Response;
 using api.Models;
+#nullable enable
 
 namespace api.Interfaces
 {

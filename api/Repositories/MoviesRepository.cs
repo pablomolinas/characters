@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Models;
 using api.Context;
 using api.Interfaces;
+#nullable enable
 
 namespace api.Repositories
 {

@@ -1,5 +1,8 @@
 
 .vscode/
 api/obj/
+obj/
 api/bin/
+api.UnitTests/obj/
+api.UnitTests/bin/
 .vs/characters/v16/

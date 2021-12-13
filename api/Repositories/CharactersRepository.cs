@@ -6,6 +6,7 @@ using api.Interfaces;
 using api.Models;
 using api.Context;
 using Microsoft.EntityFrameworkCore;
+#nullable enable
 
 namespace api.Repositories
 {

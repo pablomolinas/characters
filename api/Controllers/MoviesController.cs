@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using api.Models;
 using api.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+#nullable enable
 
 namespace api.Controllers
 {

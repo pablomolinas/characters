@@ -9,6 +9,7 @@ using api.ViewModels;
 using api.ViewModels.Response;
 using api.Services;
 using Microsoft.AspNetCore.Authorization;
+#nullable enable
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,7 +50,7 @@ namespace api.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         // POST <CharactersController>
